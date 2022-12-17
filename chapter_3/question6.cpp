@@ -59,24 +59,22 @@ bool Stack::isEmpty() {
   }
 }
 //O n^2 
-//infinite loop lol
 void Stack::sortStack() {
-  Stack bufferStack;
+  Stack buffer;
   int tempValue;
-  tempValue = this->peek();
-  bufferStack.push(this->pop());
-  std::cout << "hello1" << std::endl;
+
   while(!this->isEmpty()) {
-    std::cout << "hello2" << std::endl;
     tempValue = this->peek();
-    while(bufferStack.peek() < tempValue) {
-      std::cout << bufferStack.peek() << std::endl;
-      this->push(bufferStack.pop());
+    this->pop();
+    while(!buffer.isEmpty() && buffer.peek() < tempValue) {
+      this->push(buffer.peek());
+      buffer.pop();
     }
-    bufferStack.push(tempValue);
+    buffer.push(tempValue);
   }
-  while(!bufferStack.isEmpty()) {
-    this->push(bufferStack.pop());
+  while(!buffer.isEmpty()) {
+    std::cout << buffer.peek() << std::endl;
+    buffer.pop();
   }
 }
 
