@@ -14,7 +14,7 @@ void solveTower(int size, int start, int end){
     printMove(start, end);
     solveTower(size - 1, other, end);
   }
-j
+}
 
 class Node {
 public:
@@ -54,9 +54,23 @@ public:
       TowerVector[0]->push(startSize - i);
     }
   }
-  void sortTowers();
-}
+  /* void sortTowers(); */
+  void solveTower(int size, int start, int end);
+};
 
+void Towers::solveTower(int size, int start, int end) {
+  if (size == 1) {
+    int data = this->TowerVector[start]->pop();
+    this->TowerVector[end]->push(data);
+  } else {
+    int other = 6 - (start + end);
+    solveTower(size - 1, start, other);
+    int data = this->TowerVector[start]->pop();
+    this->TowerVector[end]->push(data);
+    solveTower(size - 1, other, end);
+  }
+}
+/*
 void Towers::sortTowers() {
   if (this->startSize == 1) {
     printMove(0, this->numberOfPegs)
@@ -73,7 +87,7 @@ void Towers::sortTowers() {
     sortTowers();
   }
 }
-
+*/
 int Stack::pop() {
   if (top == NULL) {
     std::cerr << "top of stack is null, cannot pop"
@@ -98,5 +112,7 @@ void Stack::push(int data) {
 }
 
 int main() {
+  Towers tower(10, 3);
+  tower.solveTower(10,1,3);
   return 0;
 }
