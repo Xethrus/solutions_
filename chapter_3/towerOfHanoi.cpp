@@ -14,7 +14,7 @@ void solveTower(int size, int start, int end){
     printMove(start, end);
     solveTower(size - 1, other, end);
   }
-}
+j
 
 class Node {
 public:
@@ -39,6 +39,41 @@ public:
   void push(int);
 };
 
+class Towers { 
+public:
+  std::vector<Stack*> TowerVector;
+  int startSize;
+  int numberOfPegs;
+  Towers(int startSize, int numberOfPegs) {
+    startSize = startSize;
+    numberOfPegs = numberOfPegs;
+    for(int i = 0; i < numberOfPegs; i++) {
+      TowerVector.push_back(new Stack);
+    }
+    for(int i = 0; i < startSize; i++) {
+      TowerVector[0]->push(startSize - i);
+    }
+  }
+  void sortTowers();
+}
+
+void Towers::sortTowers() {
+  if (this->startSize == 1) {
+    printMove(0, this->numberOfPegs)
+    int data = this->TowerVector[0]->pop();
+    this->TowerVector[this->numberOfPegs]->push(data);
+    return;
+  } else {
+    int other = 6 - (0 + this->numberOfPegs);
+    this->startSize -= 1;
+    int data = this->TowerVector[0]->pop();
+    this->TowerVector[other]->push(data);
+    int data = this->Tower[other]->pop();
+    this->TowerVecotr[end]->push(data);
+    sortTowers();
+  }
+}
+
 int Stack::pop() {
   if (top == NULL) {
     std::cerr << "top of stack is null, cannot pop"
@@ -60,31 +95,6 @@ void Stack::push(int data) {
   }
   stackSize++;
   return;
-}
-
-std::vector<Stack *> makeTowers(int amountofTowers, int startingSize) {
-  std::vector<Stack *> towers;
-  for(int i = 0; i < amountofTowers; i++) {
-    towers.push_back(new Stack);
-  } 
-  for(int i = 0; i < startingSize; i++) {
-    int value = startingSize - i;
-    towers[0]->push(value);
-  }
-  return towers;
-}
-void sortTowers(std::vector<Stack *> stacks, int size) {
-  if (size == 1) {
-    printMove(1, size);
-    int data = stacks[0]->pop();
-    stacks[size]->push(data);
-  } else {
-    //assuming three towers
-    int other = 6 - (0 + size);
-    sortTowers(s
-    
-  }
-
 }
 
 int main() {
