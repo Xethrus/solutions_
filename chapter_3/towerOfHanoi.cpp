@@ -30,13 +30,13 @@ public:
 class Stack {
   Node* top;
 public:
-  int stackSize;
+  int stackSize = 0;
   Stack() {
     top = nullptr;
-    stackSize = 0;
   }
   int pop();
   void push(int);
+  int peek();
 };
 
 class Towers { 
@@ -51,20 +51,56 @@ public:
       TowerVector.push_back(new Stack);
     }
     for(int i = 0; i < startSize; i++) {
+      std::cout << "stack added" << std::endl;
       TowerVector[0]->push(startSize - i);
     }
   }
   /* void sortTowers(); */
-  void solveTower(int size, int start, int end);
+  void solveTower(int size);
 };
-
+void Towers::solveTower(int size) {
+  std::cout << TowerVector[2]->stackSize << std::endl;
+  std::cout << size << std::endl;
+  while(TowerVector[2]->stackSize <= size) {
+    if(TowerVector[0]->peek() > TowerVector[2]->peek() && TowerVector[2]->peek() != 0) {
+      std::cout << TowerVector[2]->peek() << " moving to stack 1" << std::endl;
+      TowerVector[0]->push(TowerVector[2]->pop());
+    } else {
+      std::cout << TowerVector[0]->peek() << " moving to stack 3" << std::endl;
+      TowerVector[2]->push(TowerVector[0]->pop());
+    }
+    if(TowerVector[0]->peek() > TowerVector[1]->peek() && TowerVector[1]->peek() != 0) {
+      std::cout << TowerVector[1]->peek() << " moving to stack 1" << std::endl;
+      TowerVector[0]->push(TowerVector[1]->pop());
+    } else {
+      if(TowerVector[0]->peek() == 0) {
+        std::cout << TowerVector[1]->peek() << " moving to stack 1" << std::endl;
+        TowerVector[0]->push(TowerVector[1]->pop());
+      } else {
+        std::cout << TowerVector[0]->peek() << " moving to stack 2" << std::endl;
+        TowerVector[1]->push(TowerVector[0]->pop());
+      }
+    }
+    if(TowerVector[1]->peek() > TowerVector[2]->peek() && TowerVector[2]->peek() != 0) {
+      std::cout << TowerVector[2]->peek() << " moving to stack 2" << std::endl;
+      TowerVector[1]->push(TowerVector[2]->pop());
+    } else {
+      std::cout << TowerVector[1]->peek() << " moving to stack 3" << std::endl;
+      TowerVector[2]->push(TowerVector[1]->pop());
+    }
+  }
+  std::cout << "complete" << std::endl;
+}
+/*
 void Towers::solveTower(int size, int start, int end) {
   if (size == 1) {
+    std::cout << "attempting to pop from stack: " << start << std::endl;
     int data = this->TowerVector[start]->pop();
     this->TowerVector[end]->push(data);
   } else {
     int other = 6 - (start + end);
     solveTower(size - 1, start, other);
+    std::cout << "attempting to pop from stack: " << start << std::endl;
     int data = this->TowerVector[start]->pop();
     this->TowerVector[end]->push(data);
     solveTower(size - 1, other, end);
@@ -89,18 +125,27 @@ void Towers::sortTowers() {
 }
 */
 int Stack::pop() {
-  if (top == NULL) {
+  if (top == nullptr) {
     std::cerr << "top of stack is null, cannot pop"
       << std::endl;
   }
+  stackSize--;
   int temp = top->data;
   top = top->next;
   return temp;
 }
 
+int Stack::peek() {
+  if (top == nullptr) {
+    return 0;
+  } else {
+  return top->data;
+  }
+}
+
 void Stack::push(int data) {
   Node* newNode = new Node(data);
-  if (top == NULL) {
+  if (top == nullptr) {
     top = newNode;
   } else {
     Node* temp = top;
@@ -112,7 +157,7 @@ void Stack::push(int data) {
 }
 
 int main() {
-  Towers tower(10, 3);
-  tower.solveTower(10,1,3);
+  Towers tower(3, 3);
+  tower.solveTower(3);
   return 0;
 }
