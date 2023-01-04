@@ -11,7 +11,6 @@ class Node {
       this->data = data;
       this->below = NULL;
     }
-    
 };
 
 class Stack {

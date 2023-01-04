@@ -27,7 +27,6 @@ public:
 int Stack::pop() {
   if (top == NULL) {
     std::cerr << "NULL element top" << std::endl;
-    return
   } else {
     Node* temp = top;
     top = top->next;

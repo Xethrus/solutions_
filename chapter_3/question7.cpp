@@ -1,41 +1,49 @@
 #include <iostream>
 #include <vector>
-class Animal {
-public:
-  int year, month, day;
-  Animal() {
+
+class AnimalNode {
+  std::string catOrDog;
+  int year;
+  int month;
+  int day;
+  AnimalNode* nextAnimal;
+  AnimalNode* prevAnimal;
+
+  AnimalNode() {
     year = 0;
     month = 0;
     day = 0;
+    nextAnimal = nullptr;
+    prevAnimal = nullptr;
   }
-  Animal(int year,int month,int day) {
-    this->year = year;
-    this->month = month;
-    this->day = day;
+  AnimalNode(string species, int year, int month, int day) {
+    catOrDog = species;
+    year = year;
+    month = month;
+    day = day;
   }
 };
 class Queue {
-public:
-  std::vector<Animal> animals;
-  std::vector<Animal> dogs;
-  std::vector<Animal> cats;
-  void enqueue(Animal);
-  Animal dequeue();
-  
+  AnimalNode* tail;
+  AnimalNode* head;
+  void enqueue();
+  void dequeue();
 };
 
-void Queue::enqueue(Animal animal) {
-  animals.push_back(animal);
+void Queue::enqueue(AnimalNode& node) {
+  AnimalNode newNode = node;
+  if(this->tail == NULL) {
+    this->tail = newNode;
+  }
+  if(this->head == NULL) {
+    this->head = newNode;
+  } else {
+    newNode->nextAnimal = this->head;
+    this->head = newNode;
+  }
+
 }
 
-&Animal Queue::dequeue() {
-  Animal temp = animals[0];
-  animals.erase(animals.begin());
-  return temp;
-}
 
-
-int main() {
-  Queue shelter;
-  shelter.enqueue(Animal(2022,3,23));
-}
+class AnimalShelter {
+};
